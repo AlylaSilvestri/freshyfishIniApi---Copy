@@ -19,7 +19,7 @@ class UserController extends Controller
             'email' => 'required|string|email|max:255|unique:users',
             'phone_number' => 'required|string',
             'password' => 'required|string|min:6|confirmed',
-            'address' => 'nullable|string'
+            'address' => 'required|string'
         ]);
 
         $role = Role::where('role_name', 'pembeli')->first();
