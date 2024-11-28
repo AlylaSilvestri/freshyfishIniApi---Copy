@@ -51,8 +51,10 @@ Route::get('/keranjang', [CartController::class, 'showCart'])->middleware('auth:
 // Route::post('/keranjang/{id}/add-product', [CartController::class, 'addProductToCart'])->middleware('auth:sanctum');
 Route::delete('/keranjang/{id}', [CartController::class, 'removeFromCart'])->middleware('auth:sanctum');
 // Route::post('/keranjang/Nambah-produk', [CartController::class, 'MenambahkanKeKeranjang'])->middleware('auth:sanctum');
-Route::put('/updatekuantitas/{id}', [CartController::class, 'updateQuantity'])->middleware('auth:sanctum');
+// Route::put('/updatekuantitas/{id}', [CartController::class, 'updateQuantity'])->middleware('auth:sanctum');
 Route::post('/keranjang/kurangin', [CartController::class, 'decreaseQuantity'])->middleware('auth:sanctum');
+Route::post('/keranjang/tambahin', [CartController::class, 'increaseQuantity'])->middleware('auth:sanctum');
+
 
 //DETAIL KERANJANG
 Route::get('/detail-keranjang/{ID_user}', [DetailKeranjangController::class, 'showDetailsByUser'])->middleware('auth:sanctum');
