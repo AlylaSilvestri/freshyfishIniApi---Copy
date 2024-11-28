@@ -149,7 +149,67 @@ public function showAllOrdersByStore()
     ]);
 }
 
+public function getTotalProfit()
+{
+    // Ambil semua pesanan yang statusnya "complete"
+    $completedOrders = Pesanan::where('status', 'complete')->get();
 
+    // Jika tidak ada pesanan yang selesai, kembalikan pesan
+    if ($completedOrders->isEmpty()) {
+        return response()->json(['message' => 'Belum ada penjualan yang selesai.'], 404);
+    }
+
+    // Hitung total keuntungan dari semua pesanan selesai
+    $totalProfit = 0;
+
+    foreach ($completedOrders as $order) {
+        // Ambil produk yang terkait dengan pesanan melalui relasi many-to-many
+        $products = $order->produk()->get();
+
+        foreach ($products as $product) {
+            // Hitung keuntungan untuk setiap produk (kuantitas x harga per item)
+            $totalProfit += $product->pivot->quantity * $product->pivot->price_per_item;
+        }
+    }
+
+    // Kembalikan total keuntungan
+    return response()->json([
+        'message' => 'Total keuntungan penjualan berhasil dihitung.',
+        'total_profit' => $totalProfit
+    ]);
+}
+
+public function getTotalProductsSold()
+{
+    // Ambil semua pesanan yang statusnya "complete"
+    $completedOrders = Pesanan::where('status', 'complete')->get();
+
+    // Jika tidak ada pesanan yang selesai, kembalikan pesan
+    if ($completedOrders->isEmpty()) {
+        return response()->json(['message' => 'Belum ada produk yang terjual.'], 404);
+    }
+
+    // Hitung total kuantitas produk yang terjual
+    $totalProductsSold = 0;
+
+    foreach ($completedOrders as $order) {
+        // Ambil produk yang terkait dengan pesanan melalui relasi many-to-many
+        $products = $order->produk()->get();
+
+        foreach ($products as $product) {
+            // Tambahkan kuantitas dari pivot table
+            $totalProductsSold += $product->pivot->quantity;
+        }
+    }
+
+    // Kembalikan total produk terjual
+    return response()->json([
+        'message' => 'Total produk terjual berhasil dihitung.',
+        'total_products_sold' => $totalProductsSold
+    ]);
+}
+
+}
 
 //     //belum dipakai
 //     // Menampilkan pesanan untuk toko user yang login
@@ -324,4 +384,4 @@ public function showAllOrdersByStore()
 
 
 
-}
+

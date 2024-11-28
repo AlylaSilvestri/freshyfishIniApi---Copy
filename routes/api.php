@@ -62,11 +62,8 @@ Route::get('/detail-keranjang/{ID_user}', [DetailKeranjangController::class, 'sh
 Route::post('/pesanan/buatpesanan', [PesananController::class, 'checkout'])->middleware('auth:sanctum');
 Route::get('/pesanan/histori/{id}', [PesananController::class, 'markAndShowOrderHistory'])->middleware('auth:sanctum');
 Route::get('/pesanan/histori', [PesananController::class, 'showAllOrdersByStore'])->middleware('auth:sanctum');
-Route::get('/pesanan', [PesananController::class, 'index'])->middleware('auth:sanctum');
-Route::post('/pesanan', [PesananController::class, 'store'])->middleware('auth:sanctum');
-Route::post('/membuatpesanan', [PesananController::class, 'membuatPesanan'])->middleware('auth:sanctum');
-Route::post('/pesanan/create', [PesananController::class, 'createOrder'])->middleware('auth:sanctum');
-Route::post('/pesanan/makeOrder', [PesananController::class, 'getPesananFromCart'])->middleware('auth:sanctum');
+Route::get('/pesanan/total-profit', [PesananController::class, 'getTotalProfit'])->middleware('auth:sanctum');
+Route::get('/pesanan/total-products-sold', [PesananController::class, 'getTotalProductsSold'])->middleware('auth:sanctum');
 
 //ARTIKEL
 Route::middleware('auth:sanctum')->group(function () {
@@ -95,3 +92,10 @@ Route::post('detail-keranjang', [DetailKeranjangController::class, 'store'])->mi
 Route::put('detail-keranjang/{id}', [DetailKeranjangController::class, 'update'])->middleware('auth:sanctum');
 Route::delete('detail-keranjang/{id}', [DetailKeranjangController::class, 'destroy'])->middleware('auth:sanctum');
 Route::get('/users/{userId}/cart-details', [DetailKeranjangController::class, 'getUserCartDetails'])->middleware('auth:sanctum');
+
+//Pesanan sub
+Route::get('/pesanan', [PesananController::class, 'index'])->middleware('auth:sanctum');
+Route::post('/pesanan', [PesananController::class, 'store'])->middleware('auth:sanctum');
+Route::post('/membuatpesanan', [PesananController::class, 'membuatPesanan'])->middleware('auth:sanctum');
+Route::post('/pesanan/create', [PesananController::class, 'createOrder'])->middleware('auth:sanctum');
+Route::post('/pesanan/makeOrder', [PesananController::class, 'getPesananFromCart'])->middleware('auth:sanctum');
